@@ -1,4 +1,3 @@
-import os
 import nbformat
 from nbclient import NotebookClient
 

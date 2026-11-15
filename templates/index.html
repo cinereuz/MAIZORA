@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Corn Kernel Mold Detection System | GLCM, HSV & SVM</title>
+    <title>MAIZORA</title>
     <meta name="description" content="Mold detection application for corn kernels based on GLCM (texture) and HSV (color) feature extraction, Otsu & K-Means segmentation, and Support Vector Machine (SVM) classification.">
 
-    <!-- Font: Poppins (teks) + JetBrains Mono (angka/fitur) -->
+    <!-- Fonts: Poppins (UI) + JetBrains Mono (metrics/features) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -15,7 +15,6 @@
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌽</text></svg>">
 </head>
 <body>
-    <!-- Hiasan latar (gelombang), digambar lewat CSS -->
     <div class="bg-decor" aria-hidden="true"></div>
 
     <div class="container">
@@ -25,7 +24,6 @@
             <div class="header-inner">
                 <div class="title-group">
                     <h1>
-                        <!-- Logo jagung: kulit kiri, bulir kuning, kulit kanan -->
                         <svg class="logo" viewBox="85 35 320 385" aria-hidden="true">
                             <path fill="#33C15B" d="M172 102C185 110 200 125 195 145C180 190 175 260 183 335L190 412C130 400 92 340 92 285C92 220 140 150 172 102Z"/>
                             <path fill="#FFC63D" d="M181 335C170 250 190 150 250 85C280 55 305 42 322 43C338 48 348 120 345 190C340 250 290 305 181 335Z"/>
@@ -43,13 +41,7 @@
                         <span class="tag">SVM Classifier (RBF)</span>
                     </div>
                 </div>
-                <!-- <div>
-                    <a href="https://journal.cattleyadf.org/index.php/jatilima/article/view/2270" target="_blank" rel="noopener noreferrer" class="paper-badge" id="link-paper">
-                        Paper Jatilima 2026
-                    </a>
-                </div> -->
 
-                <!-- BARU -- Tombol mode admin (kurasi dataset crowdsourcing & re-training) -->
                 <div class="admin-header-actions">
                     <button type="button" class="admin-toggle-btn" id="btn-admin-login">
                         <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -66,10 +58,7 @@
             </div>
         </header>
 
-        <!-- ================================================================
-             BARU -- DASHBOARD ADMIN: Crowdsourcing Dataset & Continuous Training
-             Hanya tampil setelah admin login (body.admin-mode).
-             ================================================================ -->
+        <!-- ============ ADMIN DASHBOARD ============ -->
         <section class="admin-only" id="admin-dashboard" aria-label="Admin Dashboard">
             <div class="card section-gap">
                 <div class="card-head-row">
@@ -82,7 +71,6 @@
             </div>
 
             <div class="admin-two-col">
-                <!-- Kurasi staging -->
                 <div class="card section-gap admin-curation-card">
                     <div class="card-head-row">
                         <h3 class="card-title">Staging Curation Queue</h3>
@@ -96,7 +84,6 @@
                     <div class="staging-grid" id="staging-grid"></div>
                 </div>
 
-                <!-- Re-training -->
                 <div class="card section-gap admin-retrain-card">
                     <h3 class="card-title">Model Re-Training (SVM)</h3>
                     <div id="model-info-box" class="model-info-box"></div>
@@ -116,7 +103,6 @@
             </div>
         </section>
 
-        <!-- BARU -- Modal login admin -->
         <div class="modal-backdrop" id="admin-login-modal" hidden>
             <form class="modal-card" id="admin-login-form" autocomplete="off">
                 <h3 class="card-title">Admin Login</h3>
@@ -130,13 +116,12 @@
             </form>
         </div>
 
-        <!-- ============ INPUT: UNGGAH & SAMPEL ============ -->
+        <!-- ============ IMAGE INPUT ============ -->
         <section class="controls-grid user-only" aria-label="Image Input">
 
             <div class="card">
                 <h2 class="card-title">Upload Corn Kernel Image</h2>
                 <div class="drop-zone" id="drop-zone">
-                    <!-- Awan solid teal dengan panah putih (sesuai desain) -->
                     <svg class="icon-upload" viewBox="0 0 100 80" aria-hidden="true">
                         <path fill="currentColor" d="M27 78C12 78 2 68 2 55C2 44 9 36 19 34C21 16 35 3 53 3C67 3 78 11 82 23C93 25 98 35 98 47C98 64 88 78 72 78Z"/>
                         <path fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" d="M50 63V32M36 45L50 31L64 45"/>
@@ -146,30 +131,12 @@
                     <input type="file" id="file-input" accept="image/*">
                 </div>
             </div>
-
-            <!-- ============ UJI COBA CEPAT (DATASET SAMPEL) - DINONAKTIFKAN (DIKOMENTARI) ============
-            <div class="card">
-                <h2 class="card-title">
-                    <svg class="icon icon-navy" viewBox="0 0 24 24" aria-hidden="true">
-                        <g transform="rotate(45 12 12)">
-                            <path fill="currentColor" d="M8 5V16A4 4 0 0 0 16 16V5Z"/>
-                            <rect fill="currentColor" x="6" y="2.6" width="12" height="2.8" rx="1.4"/>
-                            <rect fill="#fff" x="10.4" y="6.6" width="3.2" height="4.2"/>
-                        </g>
-                    </svg>
-                    Quick Test (Sample Dataset)
-                </h2>
-                <p class="card-desc">Choose a sample image from the dataset to instantly see the detection result and the segmentation stage analysis:</p>
-                <div class="sample-group-title">Kernel Sample Images:</div>
-                <div class="sample-buttons" id="sample-buttons"></div>
-            </div>
-            -->
         </section>
 
-        <!-- ============ DETEKSI REALTIME WEBCAM ============ -->
+        <!-- ============ REALTIME WEBCAM ============ -->
         <section class="card section-gap user-only" aria-label="Realtime Webcam Detection">
             <h2 class="card-title">Realtime Detection (Webcam)</h2>
-            <p class="card-desc">Turn on the camera to detect corn kernels live. The server processes one camera frame every second.</p>
+            <p class="card-desc">Turn on the camera to detect corn kernels live. The server processes camera frames every 400 ms (~2.5 FPS).</p>
 
             <div class="realtime-controls">
                 <button type="button" class="btn btn-outline" id="btn-start-webcam">Start Camera</button>
@@ -186,7 +153,7 @@
             <div class="realtime-summary" id="realtime-summary"></div>
         </section>
 
-        <!-- ============ HASIL DETEKSI ============ -->
+        <!-- ============ DETECTION RESULTS ============ -->
         <main id="results-section" class="user-only">
 
             <section class="status-banner" id="status-banner">
@@ -196,7 +163,6 @@
                 </div>
             </section>
 
-            <!-- BARU -- Info kontribusi dataset crowdsourcing + feedback opsional user -->
             <section class="staging-notice" id="staging-notice" hidden></section>
 
             <section class="metrics-row" aria-label="Metrics Summary">
@@ -212,7 +178,7 @@
                     <div class="metric-value" id="metric-moldy">0</div>
                     <div class="metric-label">Moldy Kernels</div>
                 </div>
-                <!-- style="display: none;" HARUS tetap inline: app.js memunculkannya dengan style.display = "" -->
+                <!-- Keep inline display:none so app.js can toggle visibility via style.display = "" -->
                 <div class="metric-card notcorn" id="metric-card-notcorn" style="display: none;">
                     <div class="metric-value" id="metric-notcorn">0</div>
                     <div class="metric-label">Not Corn</div>
@@ -236,11 +202,11 @@
                             </svg>
                             Methodology Pipeline Inspector (Step-by-Step Interface)
                         </h2>
-                        <p class="card-desc" style="margin-bottom:0;">
+                        <p class="card-desc mb-0">
                             Explore each stage of the detection methodology sequentially using the Stepper or jump directly to any tab.
                         </p>
                     </div>
-                    <div class="inspector-mode-Switch">
+                    <div class="inspector-mode-switch">
                         <button type="button" class="btn btn-outline active-mode" id="btn-mode-stepper" title="View one stage at a time with Next/Previous controls">
                             Step-by-Step View
                         </button>
@@ -403,7 +369,7 @@
                         <div class="sub-panel">
                             <h4 class="sub-panel-title">Preprocessing Diagnostics &amp; Parameters</h4>
                             <div class="step-params-grid compact" id="step2-stats-grid"></div>
-                            <div class="theory-box" style="margin-top:0.75rem;">
+                            <div class="theory-box mt-sm">
                                 <strong>Role of Gaussian Blur:</strong>
                                 <span>A 5&times;5 Gaussian low-pass filter prevents fine fabric textures or specular dust from creating false binary blobs during Otsu thresholding, while a 3&times;3 smoothing on 128&times;128 crops stabilizes GLCM texture extraction.</span>
                             </div>
@@ -448,12 +414,12 @@
                             </div>
                         </div>
 
-                        <div class="step-params-grid" id="step3-seg-stats" style="margin-top:0.85rem;"></div>
+                        <div class="step-params-grid mt-md" id="step3-seg-stats"></div>
 
                         <!-- Quick Stage Switcher (Backward-compatible interactive viewer) -->
                         <details class="quick-stage-expander">
                             <summary>Quick Full-Size Stage Image Switcher (Original / Blur / Otsu / Annotated)</summary>
-                            <div class="stage-nav" style="margin-top:0.75rem;">
+                            <div class="stage-nav mt-sm">
                                 <button type="button" class="stage-btn active" data-stage="annotated" id="btn-stage-annotated">SVM Detection Result</button>
                                 <button type="button" class="stage-btn" data-stage="original" id="btn-stage-original">Original Image</button>
                                 <button type="button" class="stage-btn" data-stage="gray-blur" id="btn-stage-gray-blur">Grayscale + Gaussian Blur</button>
@@ -469,7 +435,7 @@
                     </div>
 
                     <!-- Sub-stage 3B: Selected Kernel K-Means -->
-                    <div class="sub-stage-block" style="margin-top:1.25rem;">
+                    <div class="sub-stage-block mt-lg">
                         <div class="sub-stage-header">
                             <h4>Sub-Stage 3B: Selected Kernel Lesion Isolation (HSV K-Means Clustering, K=3)</h4>
                         </div>
@@ -477,7 +443,7 @@
                     </div>
 
                     <!-- All Kernels Grid (Desktop) & Pager (Mobile) -->
-                    <div class="sub-stage-block" style="margin-top:1.25rem;">
+                    <div class="sub-stage-block mt-lg">
                         <div class="sub-stage-header">
                             <h4>All Segmented Kernels Overview (Click any card to inspect)</h4>
                         </div>
@@ -521,16 +487,16 @@
                                 <span class="mono-tag">StandardScaler (Z-Score)</span>
                             </div>
                             <div id="step4-hsv-panel" class="hsv-inspector-box"></div>
-                            <div class="canvas-wrap" style="margin-top:0.75rem;">
+                            <div class="canvas-wrap mt-sm">
                                 <canvas id="step4-feature-canvas" width="480" height="185"></canvas>
                             </div>
                         </div>
                     </div>
 
                     <!-- Full Feature Table & CSV Export -->
-                    <div class="sub-stage-block" style="margin-top:1.25rem;">
+                    <div class="sub-stage-block mt-lg">
                         <div class="card-head-row">
-                            <h4 class="sub-panel-title" style="margin:0; display:flex; align-items:center; gap:0.5rem;">
+                            <h4 class="sub-panel-title sub-panel-title--inline">
                                 <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                                     <path d="M3.5 3.5V17.5A3 3 0 0 0 6.5 20.5H21"/>
                                     <path d="M8.5 13.5V16.5M12.2 9.5V16.5M15.9 12V16.5M19.6 6.5V16.5"/>
@@ -547,7 +513,7 @@
                             </button>
                         </div>
 
-                        <!-- Desktop: tabel penuh -->
+                        <!-- Desktop: full table -->
                         <div class="table-responsive" id="feature-table-wrap">
                             <table id="feature-table">
                                 <thead>
@@ -569,7 +535,7 @@
                             </table>
                         </div>
 
-                        <!-- Mobile: 1 biji per halaman + tombol Previous/Next (diisi app.js) -->
+                        <!-- Mobile: 1 kernel per page + Previous/Next pagination -->
                         <div class="feature-pager" id="feature-pager">
                             <div class="pager-card" id="pager-card"></div>
                             <div class="pager-nav">
@@ -591,7 +557,7 @@
 
                     <div id="step5-decision-inspector" class="step-split-panel"></div>
 
-                    <div class="step-compare-grid two-col" style="margin-top:1.25rem;">
+                    <div class="step-compare-grid two-col mt-lg">
                         <div class="visual-box">
                             <div class="visual-box-head">
                                 <span>Final Annotated Detection Output</span>
@@ -632,7 +598,6 @@
         </footer>
     </div>
 
-    <script src="/static/app.js?v=6"></script>
-    <script src="/static/admin.js?v=3"></script>
+    <script type="module" src="/static/js/app.js?v=7"></script>
 </body>
 </html>

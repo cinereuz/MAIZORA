@@ -53,7 +53,7 @@ Batch Quality Summary + Annotated Visuals + JSON/CSV Results
 ## Project Structure
 
 ```text
-jagung-svm/
+root/
 ├── app.py                        # FastAPI server, API routes, & base64 response formatting
 ├── compute_outlier_stats.py      # Standalone script to rebuild Mahalanobis outlier stats
 ├── requirements.txt              # Python dependencies
